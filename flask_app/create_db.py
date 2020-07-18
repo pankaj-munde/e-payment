@@ -39,12 +39,13 @@ def insertUser(con, username,password,name,addr,phn_num,bal):
     con.close()
 
 def retrieveUsers():
-	con = create_connection("user_database.db")
-	cur = con.cursor()
-	cur.execute("SELECT * FROM user_info")
-	users = cur.fetchall()
-	con.close()
-	return users
+    con = create_connection("user_database.db")
+    cur = con.cursor()
+    sql_qry = """SELECT * FROM user_info where username = ?"""
+    cur.execute(sql_qry, ('pankaj.dzine@gmail.com',))
+    users = cur.fetchall()
+    con.close()
+    return users
 
 
 def main():
@@ -53,11 +54,11 @@ def main():
     sql_create_projects_table = """ CREATE TABLE IF NOT EXISTS user_info (
                                         id integer PRIMARY KEY AUTOINCREMENT,
                                         username text NOT NULL,
-                                        password text NOT NULL,
                                         name text NOT NULL,
                                         addr text NOT NULL,
                                         phone_num text NOT NULL,
-                                        bal integer NOT NULL
+                                        bal integer NOT NULL,
+                                        fid integer NOT Null
                                     ); """
 
 
@@ -69,7 +70,10 @@ def main():
         # create projects table
         # create_table(conn, sql_create_projects_table)
         # create user
-        insertUser(conn, 'pankaj.pan@gmail.com',"1234","Pankaj Pandhare", "Pune","7387421143", 100)
+        # insertUser(conn, 'pankaj.pan@gmail.com',"1234","Pankaj Pandhare", "Pune","7387421143", 100)
+        user = retrieveUsers()
+        f_id = [i for i in user]
+        print(f_id[0][-1])
         print('[Info]| Operation Successfull')
     else:
         print("Error! cannot create the database connection.")
