@@ -2,7 +2,6 @@ from flask import Flask, render_template, redirect, url_for, request
 import sqlite3
 from sqlite3 import Error
 from flask import jsonify
-import AdvancedHTMLParser
 import time
 import GT_521F52
 
