@@ -156,8 +156,11 @@ def show_locs():
 
 def show_dist():
     """ Shows starting options"""
-    start_point = str(input("[info]| Select Source of Journey : "))
-    end_point = str(input("[info]| Select end-point of Journey : "))
+    # start_point = str(input("[info]| Select Source of Journey : "))
+    # end_point = str(input("[info]| Select end-point of Journey : "))
+    print("[info]| Select Source of Journey : {}".format(get_keypress()))
+
+    print("[info]| Select Destination of Journey : {}".format(get_keypress()))
     _print_br(50)
     total_dist = _dist_calc(_get_dist(start_point), _get_dist(end_point))
     print("[info]| Total Distance of your Journey : {} km".format(total_dist))
