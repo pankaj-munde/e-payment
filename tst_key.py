@@ -24,16 +24,18 @@ keypad = factory.create_keypad(keypad=KEYPAD, row_pins=ROW_PINS, col_pins=COL_PI
 
 def printKey(key):
   print(key)
-  if (key=="1"):
-    print("number")
-  elif (key=="A"):
-    print("letter")
+  return key
+  
+  # if (key=="1"):
+  #   print("number")
+  # elif (key=="A"):
+  #   print("letter")
 
 # printKey will be called each time a keypad button is pressed
-keypad.registerKeyPressHandler(printKey)
-
-try:
-  while(True):
-    time.sleep(0.2)
-except:
- keypad.cleanup()
+key = keypad.registerKeyPressHandler(printKey)
+print('[Info]| Key returned : {}'.format(key))
+# try:
+#   while(True):
+#     time.sleep(0.2)
+# except:
+#  keypad.cleanup()
