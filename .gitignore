@@ -1,2 +1,5 @@
 .idea
 flask/__pycache__
+.vscode/
+e_payment.ui
+__pycache__

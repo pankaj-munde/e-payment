@@ -124,14 +124,7 @@ def login():
 @app.route('/index', methods=["GET", "POST"])
 def index():
     user_info = retrieveUsers()
-    print(user_info)
-    # Add user to DB
-    # parser = AdvancedHTMLParser.AdvancedHTMLParser()
-    # parser.parseFile('templates/index.html')
-    # ele_id = parser.getElementById('fscan')
-    # print(ele_id)
 
-    # print('Got id = {}'.format(ele_id))
     if request.method == 'POST':
         if request.form['submit_button'] == 'Add':
 

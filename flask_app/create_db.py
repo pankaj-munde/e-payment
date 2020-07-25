@@ -1,6 +1,6 @@
 import sqlite3
 from sqlite3 import Error
-
+import time
 
 def create_connection(db_file):
     """ create a database connection to the SQLite database
@@ -41,12 +41,22 @@ def insertUser(con, username,password,name,addr,phn_num,bal):
 def retrieveUsers():
     con = create_connection("user_database.db")
     cur = con.cursor()
-    sql_qry = """SELECT * FROM user_info where username = ?"""
-    cur.execute(sql_qry, ('pankaj.dzine@gmail.com',))
+    sql_qry = """SELECT * FROM user_info where fid = ?"""
+    cur.execute(sql_qry, ('1',))
     users = cur.fetchall()
     con.close()
     return users
 
+def update_db():
+    con = create_connection('user_database.db')
+    cursor = con.cursor()
+
+    sql_update_query = """Update user_info set bal = ? where fid = ?"""
+    data = ("200", '1')
+    cursor.execute(sql_update_query, data)
+    con.commit()
+    print("Record Updated successfully")
+    cursor.close()
 
 def main():
     database = r"user_database.db"
@@ -71,9 +81,11 @@ def main():
         # create_table(conn, sql_create_projects_table)
         # create user
         # insertUser(conn, 'pankaj.pan@gmail.com',"1234","Pankaj Pandhare", "Pune","7387421143", 100)
+        # update_db()
+        # time.sleep(0.2)
         user = retrieveUsers()
-        f_id = [i for i in user]
-        print(f_id[0][-1])
+        
+        print(user[0][-2])
         print('[Info]| Operation Successfull')
     else:
         print("Error! cannot create the database connection.")
