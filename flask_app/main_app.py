@@ -1,5 +1,6 @@
 # from pad4pi import rpi_gpio
 import time
+import serial
 import sqlite3
 from sqlite3 import Error
 
@@ -17,6 +18,22 @@ location_data = [{"loc_0":"Pune", "dist_0":0},
 database = r"user_database.db"
 
 ## Supporting Functions
+def get_keypress():
+    factory = rpi_gpio.KeypadFactory()
+
+    # Try factory.create_4_by_3_keypad
+    # and factory.create_4_by_4_keypad for reasonable defaults
+    keypad = factory.create_keypad(keypad=KEYPAD, row_pins=ROW_PINS, col_pins=COL_PINS)
+
+    #keypad.cleanup()
+
+    def return_key(key):
+        print(key)
+        keypad.cleanup()
+        return key
+
+    # printKey will be called each time a keypad button is pressed
+    keypad.registerKeyPressHandler(return_key)
 
 def create_connection(db_file):
     """ create a database connection to the SQLite database
@@ -152,6 +169,24 @@ def show_price(total_dist):
     print("Total fair is: {} ruppees".format(total_fair))
     _print_br(50)
     return total_fair
+
+def send_sms(mobile_no):
+    phone = serial.Serial("/dev/ttyAMA0",  11500, timeout=5)
+    try:
+        time.sleep(0.5)
+        phone.write(b'ATZ\r')
+        time.sleep(0.5)
+        phone.write(b'AT+CMGF=1\r')
+        time.sleep(0.5)
+        phone.write(b'AT+CMGS="' + mobile_no.encode() + b'"\r')
+        time.sleep(0.5)
+        phone.write(message.encode() + b"\r")
+        time.sleep(0.5)
+        phone.write(bytes([26]))
+        time.sleep(0.5)
+    finally:
+        phone.close()
+
 
 if __name__ == "__main__":
     
