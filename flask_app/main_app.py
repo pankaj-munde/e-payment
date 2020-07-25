@@ -192,7 +192,6 @@ if __name__ == "__main__":
     
     # Show Journey Points
     show_locs()
-
     # Show Dist calculation
     total_dist = show_dist()
 
